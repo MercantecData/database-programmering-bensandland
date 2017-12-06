@@ -2,7 +2,9 @@
 	session_start();
 	include "db.php";
 	$user = $_POST["username"];
+	$user = $conn->mysqli_escape_string($user);
 	$pass = $_POST["password"];
+	$pass = $conn->mysqli_escape_string($pass);
 
 	$sql = "SELECT * FROM users WHERE `username` = '$user'";
 
