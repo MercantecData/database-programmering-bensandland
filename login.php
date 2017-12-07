@@ -2,9 +2,9 @@
 	session_start();
 	include "db.php";
 	$user = $_POST["username"];
-	$user = $conn->mysqli_escape_string($user);
+	$user = $conn->real_escape_string($user);
 	$pass = $_POST["password"];
-	$pass = $conn->mysqli_escape_string($pass);
+	$pass = $conn->real_escape_string($pass);
 
 	$sql = "SELECT * FROM users WHERE `username` = '$user'";
 
@@ -19,11 +19,13 @@
 				header( "Location: index.php" );
 			} else {
 				echo "Invalid username or password!";
-				header( "Location: loginpage.php" );
+				echo "<script>setTimeout(\"location.href = '/loginpage.php';\",2000);</script>";
 			}
+		} 
+		else {
+			echo "Invalid username or password!";
+			echo "<script>setTimeout(\"location.href = '/loginpage.php';\",2000);</script>";
 		}
-	} else {
-		echo "Invalid username or password!";
 	}
 
 	mysqli_close($conn);	

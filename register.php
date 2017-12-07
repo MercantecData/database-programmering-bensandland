@@ -1,11 +1,11 @@
 <?php
 	include "db.php";
 	$user = $_POST["username"];
-	$user = $conn->mysqli_escape_string($user);
+	$user = $conn->real_escape_string($user);
 	$pass = $_POST["password"];
-	$pass = $conn->mysqli_escape_string($pass);
+	$pass = $conn->real_escape_string($pass);
 	$pass2 = $_POST["password2"];
-	$pass2 = $conn->mysqli_escape_string($pass2);
+	$pass2 = $conn->real_escape_string($pass2);
 
 	$sql = "SELECT * FROM users WHERE `username` = '$user'";
 
@@ -20,14 +20,17 @@
 			VALUES ('$user', '$pass')";
 
 			if ($conn->query($sql)) {
-				echo "<script>setTimeout(\"location.href = '/loginpage.php';\",1500);</script>";
+				echo "You have been registered!";
+				echo "<script>setTimeout(\"location.href = '/loginpage.php';\",2000);</script>";
 			}
 			else {
 				echo "Error: " . $sql . "<br>" . $conn->error;
+				echo "<script>setTimeout(\"location.href = '/loginpage.php';\",2000);</script>";
 			}
 		}
 		else {
 			echo "The two passwords doesn't match";
+			echo "<script>setTimeout(\"location.href = '/loginpage.php';\",2000);</script>";
 		}
 	}
 
