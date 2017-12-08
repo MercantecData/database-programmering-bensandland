@@ -6,7 +6,7 @@
 	$pass = $_POST["password"];
 	$pass = $conn->real_escape_string($pass);
 
-	$sql = "SELECT * FROM users WHERE `username` = '$user'";
+	$sql = "SELECT ID, username, password, mail FROM users WHERE `username` = '$user'";
 
 	$result = mysqli_query($conn, $sql);
 
@@ -14,19 +14,16 @@
 		while($row = mysqli_fetch_assoc($result)) {
 			if($row["username"] == $user && $row["password"] == $pass)
 			{
+				$_SESSION["id"] = $row["ID"];
+				$_SESSION["username"] = $row["username"];
 				echo "You are currently logged in as: " . $row["username"];
-				$_SESSION["id"] = $row["id"];
-				header( "Location: index.php" );
+				echo "<script>setTimeout(\"location.href = '/status.php';\",2200);</script>";
 			} else {
 				echo "Invalid username or password!";
 				echo "<script>setTimeout(\"location.href = '/loginpage.php';\",2000);</script>";
 			}
-		} 
-		else {
-			echo "Invalid username or password!";
-			echo "<script>setTimeout(\"location.href = '/loginpage.php';\",2000);</script>";
 		}
 	}
 
-	mysqli_close($conn);	
+	mysqli_close($conn);
 ?>
